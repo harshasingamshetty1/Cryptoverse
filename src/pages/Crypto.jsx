@@ -1,10 +1,11 @@
 import React from "react";
 import TableComp from "../components/TableComp";
+import { CryptoProvider } from "../context/CryptoContext";
 
 function Crypto() {
   return (
     <div>
-      <section className="w-[80%] h-full flex flex-col mt-16 mb-24 relative">
+      <section className=" h-full flex flex-col mt-16 mb-24 relative">
         <TableComp />
       </section>
     </div>
