@@ -1,10 +1,11 @@
+import { useEffect } from "react";
 import { createContext, useState, useLayoutEffect } from "react";
 
 export const CryptoContext = createContext({});
 
 export const CryptoProvider = ({ children }) => {
   const [cryptoData, setCryptoData] = useState([]);
-
+  const [searchResults, setSearchResults] = useState([]);
   const getCryptoData = async () => {
     try {
       const data = await fetch(
@@ -13,11 +14,25 @@ export const CryptoProvider = ({ children }) => {
       )
         .then((res) => res.json())
         .then((json) => json);
-      if (!data) {
-        throw Error("Fetching error");
-      }
+
       console.log("data from context= ", data);
       setCryptoData(data);
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
+
+  let getSearchResults = async (query) => {
+    try {
+      let data =
+        await fetch(`https://api.coingecko.com/api/v3/search?query=${query}
+    `)
+          .then((res) => res.json())
+          .then((json) => json);
+
+      console.log("data from context= ", data);
+
+      setSearchResults(data);
     } catch (e) {
       console.log("error", e);
     }
@@ -26,9 +41,12 @@ export const CryptoProvider = ({ children }) => {
   useLayoutEffect(() => {
     getCryptoData();
   }, []);
+
   // remember to use return,
   return (
-    <CryptoContext.Provider value={{ cryptoData }}>
+    <CryptoContext.Provider
+      value={{ cryptoData, searchResults, getSearchResults }}
+    >
       {children}
     </CryptoContext.Provider>
   );
