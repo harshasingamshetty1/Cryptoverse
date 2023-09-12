@@ -7,12 +7,18 @@ import { CryptoContext } from "../context/CryptoContext";
 
 const SearchInputComp = ({ debounceFunc }) => {
   const [searchText, setSearchText] = useState("");
+  const { searchResults, setSearchResults, setCoinSearch } =
+    useContext(CryptoContext);
   let handleInput = (e) => {
     e.preventDefault();
     let query = e.target.value;
     setSearchText(query);
     debounceFunc(query);
-    console.log("ssss", searchText);
+  };
+  const selectCoin = (coin) => {
+    setCoinSearch(coin);
+    setSearchText("");
+    setSearchResults([]);
   };
   return (
     <>
@@ -31,12 +37,33 @@ const SearchInputComp = ({ debounceFunc }) => {
       </form>
 
       {searchText.length > 0 ? (
-        // here, the filters comp is given as relative pos,
-        //so, this absolute will be according to the filters comp.
-        <ul className="absolute top-11 right-0 w-full h-96 bg-gray-200 flex flex-col items-center bg-opacity-60 backdrop-blur-md  ">
-          <li>btc</li>
-          <li>eth</li>
-          <li>btc</li>
+        // here, the parent comp is given as relative pos,
+        //so, this absolute will be according to the search comp.
+        // so, we gave right-0, therfore the ul will have 0 gap realative to the right side of the search comp
+        <ul className="absolute top-11 right-0 w-96 h-96 bg-gray-200 overflow-x-hidden  flex flex-col  bg-opacity-60 backdrop-blur-md  ">
+          {searchResults.length > 0 ? (
+            searchResults.map((item) => {
+              return (
+                <li
+                  key={item.id}
+                  onClick={() => {
+                    //here passing the id, bcoz in the api we are passing the ids={coinSearch}. i.e only ids needs to passed to get the relevant info from the api
+                    selectCoin(item.id);
+                  }}
+                  className=" flex items-center ml-4 my-2 cursor-pointer"
+                >
+                  <img
+                    className="w-[1rem] h-[1rem] mx-1.5"
+                    src={item.thumb}
+                    alt={item.name}
+                  />
+                  <span>{item.name}</span>
+                </li>
+              );
+            })
+          ) : (
+            <h2> searching...</h2>
+          )}
         </ul>
       ) : null}
     </>
@@ -44,15 +71,19 @@ const SearchInputComp = ({ debounceFunc }) => {
 };
 
 const Search = () => {
-  const { getSearchResults } = useContext(CryptoContext);
   /*  our plan is such that, we have to call the api only after 2 seconds but not for every single char typed. therefore we are using the debouncer. And its property is that, how many ever times we may call that(without re-rendering comp) , only once excn for every 2 scnds is carried out. And whichever was the latest function execution, i.e the latest query param at the end of 2secs will be considered for the invocation. therefore it suits best for our usecase of searching and hitting the api */
 
   /*Now, the reason, we have separated these function from the other comp is that, bcoz the seachInputComp is re-rendered everytime, the search text is changed, and every re-render will create a debounce function instance,therefore wasting the main purpose of debounce. */
+  const { getSearchResults } = useContext(CryptoContext);
   const debounceFunc = debounce(function (query) {
     getSearchResults(query);
   }, 2000);
 
-  return <SearchInputComp debounceFunc={debounceFunc} />;
+  return (
+    <div className="relative">
+      <SearchInputComp debounceFunc={debounceFunc} />
+    </div>
+  );
 };
 
 export default Search;
