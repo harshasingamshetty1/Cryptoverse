@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { CryptoContext } from "../context/CryptoContext";
 
 function TableComp() {
-  let { cryptoData } = useContext(CryptoContext);
+  let { cryptoData, currency } = useContext(CryptoContext);
   console.log("data = ", cryptoData);
   return (
     <div className=" border rounded mt-9 flex flex-col ">
@@ -75,7 +75,7 @@ function TableComp() {
                   <td className="py-4">
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
-                      currency: "usd",
+                      currency: currency,
                     }).format(data.current_price)}
                   </td>
                   <td className="py-4">{data.total_volume}</td>
