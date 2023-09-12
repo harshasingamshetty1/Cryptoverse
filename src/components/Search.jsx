@@ -7,10 +7,12 @@ import { CryptoContext } from "../context/CryptoContext";
 
 const SearchInputComp = ({ debounceFunc }) => {
   const [searchText, setSearchText] = useState("");
+  const [openSearchBox, setOpenSearchBox] = useState(false);
   const { searchResults, setSearchResults, setCoinSearch } =
     useContext(CryptoContext);
-  let handleInput = (e) => {
+  const handleInput = (e) => {
     e.preventDefault();
+    setOpenSearchBox(true);
     let query = e.target.value;
     setSearchText(query);
     debounceFunc(query);
@@ -20,9 +22,27 @@ const SearchInputComp = ({ debounceFunc }) => {
     setSearchText("");
     setSearchResults([]);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setOpenSearchBox(false);
+    const ids = searchResults.map((coin) => coin.id);
+    console.log("print ids = ", ids);
+
+    setCoinSearch([...searchResults, ids]);
+    // setSearchText("");
+    setSearchResults([]);
+
+    //doing the same thing, just taking the searched Text and
+    // assigning them on the search card
+    // debounceFunc(searchText);
+  };
   return (
     <>
-      <form className="w-96 flex items-center relative ml-7 font-nunito ">
+      <form
+        className="w-96 flex items-center relative ml-7 font-nunito "
+        onSubmit={handleSubmit}
+      >
         <input
           className="w-full rounded-lg bg-gray-200 pl-2 placeholder:text-gray-100 required border border-transparent
           focus:border-cyan outline-0  "
@@ -36,7 +56,7 @@ const SearchInputComp = ({ debounceFunc }) => {
         </button>
       </form>
 
-      {searchText.length > 0 ? (
+      {openSearchBox ? (
         // here, the parent comp is given as relative pos,
         //so, this absolute will be according to the search comp.
         // so, we gave right-0, therfore the ul will have 0 gap realative to the right side of the search comp
@@ -62,7 +82,10 @@ const SearchInputComp = ({ debounceFunc }) => {
               );
             })
           ) : (
-            <h2> searching...</h2>
+            <div className="flex  justify-center h-full  items-center  ">
+              <div className="w-8 h-8 border-4 border-cyan  rounded-full border-b-gray-200 animate-spin   " />
+              <span className="text-md ml-2">Searching...</span>
+            </div>
           )}
         </ul>
       ) : null}
