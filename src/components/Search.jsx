@@ -1,14 +1,14 @@
 import debounce from "lodash.debounce";
 import React from "react";
 import { useContext } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import searchIcon from "../assets/search-icon.svg";
 import { CryptoContext } from "../context/CryptoContext";
 
 const SearchInputComp = ({ debounceFunc }) => {
   const [searchText, setSearchText] = useState("");
   const [openSearchBox, setOpenSearchBox] = useState(false);
-  const { searchResults, setSearchResults, setCoinSearch } =
+  const { searchResults, setSearchResults, setCoinSearch, reset, setPerPage } =
     useContext(CryptoContext);
   const handleInput = (e) => {
     e.preventDefault();
@@ -19,7 +19,7 @@ const SearchInputComp = ({ debounceFunc }) => {
   };
   const selectCoin = (coin) => {
     setCoinSearch(coin);
-    setSearchText("");
+    setOpenSearchBox(false);
     setSearchResults([]);
   };
 
@@ -37,6 +37,11 @@ const SearchInputComp = ({ debounceFunc }) => {
     // assigning them on the search card
     // debounceFunc(searchText);
   };
+
+  useEffect(() => {
+    setSearchText("");
+  }, [reset]);
+
   return (
     <>
       <form
@@ -60,7 +65,7 @@ const SearchInputComp = ({ debounceFunc }) => {
         // here, the parent comp is given as relative pos,
         //so, this absolute will be according to the search comp.
         // so, we gave right-0, therfore the ul will have 0 gap realative to the right side of the search comp
-        <ul className="absolute top-11 right-0 w-96 h-96 bg-gray-200 overflow-x-hidden  flex flex-col  bg-opacity-60 backdrop-blur-md  ">
+        <ul className="absolute top-11 right-0 w-96 h-96 bg-gray-200 overflow-x-hidden  flex flex-col  bg-opacity-60 backdrop-blur-md  scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-100    ">
           {searchResults.length > 0 ? (
             searchResults.map((item) => {
               return (

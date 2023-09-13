@@ -51,10 +51,10 @@ const PerPage = () => {
 };
 
 const Pagination = () => {
-  let { page, setPage, totalPages, perPage, cryptoData } =
+  let { page, setPage, totalCoins, perPage, cryptoData } =
     useContext(CryptoContext);
 
-  const TotalNumber = Math.ceil(totalPages / perPage);
+  const TotalNumber = Math.ceil(totalCoins / perPage);
 
   const next = () => {
     if (page === TotalNumber) {
@@ -88,6 +88,7 @@ const Pagination = () => {
     }
   };
 
+  //If the data length < per page capacity, then do not show the pagination component
   if (cryptoData && cryptoData.length >= perPage) {
     return (
       <div className="flex items-center">
