@@ -14,7 +14,7 @@ function Currency() {
   };
   const { setCurrency } = useContext(CryptoContext);
   return (
-    <div>
+    <div className="ml-3">
       <form className="flex ">
         {/* in react we use htmlFor attr equivalent to "for", which basically points to the id of the input */}
         <label htmlFor="currency" className="font-bold mr-2">
@@ -26,7 +26,7 @@ function Currency() {
           ref={currencyRef}
           type="text"
           placeholder="usd"
-          className="w-16 rounded bg-gray-200 pl-2 mr-1 placeholder:text-gray-100 border border-transparent focus:border-cyan ml-2 outline-0"
+          className="w-16 rounded bg-gray-200 pl-2  placeholder:text-gray-100 border border-transparent focus:border-cyan ml-2 outline-0"
         ></input>
         <button type="submit" onClick={handleSubmit}>
           <img src={submitIcon}></img>
