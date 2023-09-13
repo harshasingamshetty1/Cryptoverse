@@ -20,5 +20,6 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  //additinal dev plugin for scrollbar by tailwind
+  plugins: [require("tailwind-scrollbar")],
 };

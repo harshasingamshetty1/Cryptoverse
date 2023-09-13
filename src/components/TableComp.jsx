@@ -64,6 +64,7 @@ function TableComp() {
                         alt={data.name}
                       />
                       <span>
+                        {/* onClick of symbol, we are going to the modal popup route */}
                         <Link to={`/${data.id}`} className="cursor-pointer">
                           {data.symbol}
                         </Link>
@@ -81,8 +82,16 @@ function TableComp() {
                       }).format(data.current_price)}
                     </td>
                     <td className="py-4">{data.total_volume}</td>
-                    <td className="py-4">
-                      {data.market_cap_change_percentage_24h}%
+
+                    <td
+                      className={
+                        data.market_cap_change_percentage_24h > 0
+                          ? "text-green py-4 lg:table-cell "
+                          : "text-red py-4  lg:table-cell "
+                      }
+                    >
+                      {Number(data.market_cap_change_percentage_24h).toFixed(2)}
+                      %
                     </td>
                     <td
                       className={
@@ -94,6 +103,7 @@ function TableComp() {
                       {Number(
                         data.price_change_percentage_1h_in_currency
                       ).toFixed(2)}
+                      %
                     </td>
                     <td
                       className={
@@ -105,6 +115,7 @@ function TableComp() {
                       {Number(
                         data.price_change_percentage_24h_in_currency
                       ).toFixed(2)}
+                      %
                     </td>
                     <td
                       className={
@@ -116,6 +127,7 @@ function TableComp() {
                       {Number(
                         data.price_change_percentage_7d_in_currency
                       ).toFixed(2)}
+                      $
                     </td>
                   </tr>
                 );
