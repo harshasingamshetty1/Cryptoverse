@@ -6,13 +6,11 @@ import { CryptoProvider } from "../context/CryptoContext";
 
 function Crypto() {
   return (
-    <div>
-      <section className=" h-full flex flex-col mt-16 mb-24 relative">
-        <Filters />
-        <TableComp />
-        <Outlet />
-      </section>
-    </div>
+    <section className=" w-[80%] h-full flex flex-col mt-16 mb-24 relative">
+      <Filters />
+      <TableComp />
+      <Outlet />
+    </section>
   );
 }
 

@@ -138,7 +138,7 @@ function CryptoDetails() {
                     }).format(data.market_data.market_cap[currency])}
                   </h2>
                   <h2>
-                    {new Intl.NumberFormat("en-IN", {
+                    {new Intl.NumberFormat("en-US", {
                       style: "currency",
                       currency: currency,
                       // this gives value like TCr for thousand crores
@@ -202,17 +202,17 @@ function CryptoDetails() {
                 </div>
                 <div className="flex justify-between items-center font-bold">
                   <h2>
-                    {new Intl.NumberFormat("en-IN", {
-                      style: "currency",
+                    {new Intl.NumberFormat("en-US", {
+                      // style: "currency",
                       currency: currency,
                       minimumFractionDigits: 0,
+                      notation: "compact",
                     }).format(data.market_data.max_supply)}
                   </h2>
                   <h2>
                     {new Intl.NumberFormat("en-IN", {
-                      style: "currency",
+                      // style: "currency",
                       currency: currency,
-
                       minimumFractionDigits: 0,
                     }).format(data.market_data.circulating_supply)}
                   </h2>
@@ -314,7 +314,6 @@ function CryptoDetails() {
             </div>
 
             <div className="w-[55%] h-full  flex  pl-3 flex-col">
-              right
               <Chart id={data.id} />
               <div className="flex flex-col mt-5 ml-2">
                 <h3 className="text-white py-1">
