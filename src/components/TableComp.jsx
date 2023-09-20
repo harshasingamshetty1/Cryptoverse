@@ -62,11 +62,11 @@ function TableComp() {
                 <th className="py-1  px-6">asset</th>
                 <th className="py-1 px-6 ">name</th>
                 <th className="py-1 px-6 ">price</th>
-                <th className="py-1 px-6 ">total volume</th>
+                <th className="py-1 px-6 md:table-cell hidden">total volume</th>
                 <th className="py-1 px-6 ">market cap change</th>
-                <th className="py-1 px-6 ">1H</th>
-                <th className="py-1 px-6 ">24H</th>
-                <th className="py-1 px-6 ">7D</th>
+                <th className="py-1 px-6 lg:table-cell hidden ">1H</th>
+                <th className="py-1 px-6 lg:table-cell hidden">24H</th>
+                <th className="py-1 px-6 lg:table-cell hidden">7D</th>
               </tr>
             </thead>
 
@@ -98,30 +98,32 @@ function TableComp() {
                         {data.name}
                       </Link>
                     </td>
-                    <td className="py-4">
+                    <td className="py-4 ">
                       {new Intl.NumberFormat("en-IN", {
                         style: "currency",
                         currency: currency,
                       }).format(data.current_price)}
                     </td>
-                    <td className="py-4">{data.total_volume}</td>
+                    <td className="py-4 md:table-cell hidden">
+                      {data.total_volume}
+                    </td>
 
                     <td
-                      className={
+                      className={`${
                         data.market_cap_change_percentage_24h > 0
-                          ? "text-green py-4 lg:table-cell "
-                          : "text-red py-4  lg:table-cell "
-                      }
+                          ? "text-green py-4  "
+                          : "text-red py-4   "
+                      } `}
                     >
                       {Number(data.market_cap_change_percentage_24h).toFixed(2)}
                       %
                     </td>
                     <td
-                      className={
+                      className={`${
                         data.price_change_percentage_1h_in_currency > 0
-                          ? "text-green py-4 lg:table-cell  "
-                          : "text-red py-4  lg:table-cell "
-                      }
+                          ? "text-green py-4  "
+                          : "text-red py-4   "
+                      } lg:table-cell hidden`}
                     >
                       {Number(
                         data.price_change_percentage_1h_in_currency
@@ -129,11 +131,11 @@ function TableComp() {
                       %
                     </td>
                     <td
-                      className={
+                      className={`${
                         data.price_change_percentage_24h_in_currency > 0
-                          ? "text-green py-4 lg:table-cell "
-                          : "text-red py-4  lg:table-cell "
-                      }
+                          ? "text-green py-4  "
+                          : "text-red py-4   "
+                      } lg:table-cell hidden`}
                     >
                       {Number(
                         data.price_change_percentage_24h_in_currency
@@ -141,11 +143,11 @@ function TableComp() {
                       %
                     </td>
                     <td
-                      className={
+                      className={`${
                         data.price_change_percentage_7d_in_currency > 0
-                          ? "text-green py-4 lg:table-cell "
-                          : "text-red py-4  lg:table-cell "
-                      }
+                          ? "text-green py-4  "
+                          : "text-red py-4   "
+                      } lg:table-cell hidden`}
                     >
                       {Number(
                         data.price_change_percentage_7d_in_currency
@@ -157,7 +159,12 @@ function TableComp() {
               })}
             </tbody>
           </table>
-        ) : null}
+        ) : (
+          <div className="flex  min-h-[60vh] justify-center h-full   items-center  ">
+            <div className="w-8 h-8 border-4 border-cyan  rounded-full border-b-gray-200 animate-spin   " />
+            <span className="text-md ml-2">Please wait...</span>
+          </div>
+        )}
       </div>
 
       <div className="flex items-center justify-between mt-4 capitalize h-[2rem]">

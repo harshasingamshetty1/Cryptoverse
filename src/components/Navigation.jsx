@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const Navigation = () => {
   return (
     <nav
-      className=" w-[40%] mt-16 flex justify-around align-middle
+      className=" w-[40%] max-md:w-[80%] mt-24 flex justify-around align-middle
     border border-cyan rounded-lg
     "
     >

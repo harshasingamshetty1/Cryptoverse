@@ -460,7 +460,12 @@ function CryptoDetails() {
               )}
             </div>
           </div>
-        ) : null}
+        ) : (
+          <div className="flex  min-h-[60vh] justify-center h-full   items-center  ">
+            <div className="w-8 h-8 border-4 border-cyan  rounded-full border-b-gray-200 animate-spin   " />
+            <span className="text-md ml-2">Please wait...</span>
+          </div>
+        )}
       </div>
     </div>,
     document.getElementById("modal")

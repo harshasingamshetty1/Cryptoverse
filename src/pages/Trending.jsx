@@ -9,10 +9,16 @@ function Trending() {
   return (
     <section className="w-[80%] h-full flex flex-col  mt-16 mb-24 relative">
       <div className="w-full min-h-[60vh] py-8 flex flex-wrap justify-evenly  border border-gray-100 rounded">
-        {trendData &&
+        {trendData ? (
           trendData.map((coin) => {
             return <TrendingCoin coin={coin.item} />;
-          })}
+          })
+        ) : (
+          <div className="flex  min-h-[60vh] justify-center h-full   items-center  ">
+            <div className="w-8 h-8 border-4 border-cyan  rounded-full border-b-gray-200 animate-spin   " />
+            <span className="text-md ml-2">Please wait...</span>
+          </div>
+        )}
         <button
           className="w-[2rem] ml-4 hover:scale-110 transition-all transition-ease
         absolute right-0 -top-10

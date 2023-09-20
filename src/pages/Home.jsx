@@ -17,7 +17,7 @@ const Home = () => {
             {/* It's a common practice to use negative z-index values for background elements to ensure that they don't interfere with the layout and interaction of other elements on the page. */}
             {/* so with this div, we need not think about bg again, coz its for the
       entire viewport */}
-            <div className="w-screen h-screen bg-gray-300 fixed -z-10" />
+            <div className="w-screen h-screen bg-gradient-to-tr from-gray-300 to-gray-900      fixed -z-10" />
 
             <Logo />
             <Navigation />

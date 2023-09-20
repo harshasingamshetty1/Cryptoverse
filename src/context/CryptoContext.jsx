@@ -20,6 +20,9 @@ export const CryptoProvider = ({ children }) => {
   const getCryptoData = async () => {
     console.log("before seetting pages", totalCoins);
 
+    // THis we are setting just bcoz, we want to have a loading screen when we change a page. i.e, lets say I change page, now first I am making the data as empty and then, setting the data, therefore we will get our loading screen.
+    setCryptoData();
+    //This we have just checked the api and hardcoded to not call the api so many times, coz it has a rate limit
     setTotalCoins(9920);
     console.log("after seetting pages,", totalCoins);
 
